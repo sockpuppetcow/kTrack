@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using kTrack.Models;
 
 namespace kTrack.Data
 {
@@ -12,5 +13,6 @@ namespace kTrack.Data
             : base(options)
         {
         }
+        public DbSet<kTrack.Models.Project> Project { get; set; }
     }
 }
