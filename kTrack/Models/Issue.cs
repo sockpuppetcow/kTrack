@@ -13,9 +13,9 @@ namespace kTrack.Models
         public int ProjectRefId { get; set; }
         [ForeignKey("ProjectRefId")]
         public virtual Project Project { get; set; }
-        public int AuthorId { get; set; }
+        public string AuthorId { get; set; }
         [ForeignKey("AuthorId")]        
-        public virtual UserProfile Author { get; set; }
+        public virtual IdentityUser Author { get; set; }
         public String Title { get; set; }
         public String Body { get; set; }
         public Label[] Labels { get; set; }

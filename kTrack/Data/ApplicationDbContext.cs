@@ -14,5 +14,6 @@ namespace kTrack.Data
         {
         }
         public DbSet<kTrack.Models.Project> Project { get; set; }
+        public DbSet<kTrack.Models.Issue> Issue { get; set; }
     }
 }
