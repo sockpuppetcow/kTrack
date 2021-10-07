@@ -7,9 +7,11 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using kTrack.Data;
 using kTrack.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace kTrack.Controllers
 {
+    [Authorize]
     public class IssuesController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -20,6 +22,7 @@ namespace kTrack.Controllers
         }
 
         // GET: Issues
+        [AllowAnonymous]
         public async Task<IActionResult> Index()
         {
             var applicationDbContext = _context.Issue.Include(i => i.Author).Include(i => i.Project);
@@ -27,6 +30,7 @@ namespace kTrack.Controllers
         }
 
         // GET: Issues/Details/5
+        [AllowAnonymous]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -50,7 +54,7 @@ namespace kTrack.Controllers
         public IActionResult Create()
         {
             ViewData["AuthorId"] = new SelectList(_context.Users, "Id", "Id");
-            ViewData["ProjectRefId"] = new SelectList(_context.Project, "Id", "Id");
+            ViewData["ProjectRefId"] = new SelectList(_context.Project, "Id", "Title");
             return View();
         }
 
@@ -68,7 +72,7 @@ namespace kTrack.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["AuthorId"] = new SelectList(_context.Users, "Id", "Id", issue.AuthorId);
-            ViewData["ProjectRefId"] = new SelectList(_context.Project, "Id", "Id", issue.ProjectRefId);
+            ViewData["ProjectRefId"] = new SelectList(_context.Project, "Id", "Title", issue.ProjectRefId);
             return View(issue);
         }
 
@@ -86,7 +90,7 @@ namespace kTrack.Controllers
                 return NotFound();
             }
             ViewData["AuthorId"] = new SelectList(_context.Users, "Id", "Id", issue.AuthorId);
-            ViewData["ProjectRefId"] = new SelectList(_context.Project, "Id", "Id", issue.ProjectRefId);
+            ViewData["ProjectRefId"] = new SelectList(_context.Project, "Id", "Title", issue.ProjectRefId);
             return View(issue);
         }
 
@@ -123,7 +127,7 @@ namespace kTrack.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["AuthorId"] = new SelectList(_context.Users, "Id", "Id", issue.AuthorId);
-            ViewData["ProjectRefId"] = new SelectList(_context.Project, "Id", "Id", issue.ProjectRefId);
+            ViewData["ProjectRefId"] = new SelectList(_context.Project, "Id", "Title", issue.ProjectRefId);
             return View(issue);
         }
 
