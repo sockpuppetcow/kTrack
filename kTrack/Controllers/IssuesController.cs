@@ -10,7 +10,7 @@ using kTrack.Models;
 using Microsoft.AspNetCore.Authorization;
 
 namespace kTrack.Controllers
-{
+{ 
     [Authorize]
     public class IssuesController : Controller
     {
@@ -20,6 +20,7 @@ namespace kTrack.Controllers
         {
             _context = context;
         }
+
 
         // GET: Issues
         [AllowAnonymous]

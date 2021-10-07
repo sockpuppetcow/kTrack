@@ -35,7 +35,6 @@ namespace kTrack
 
             services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddEntityFrameworkStores<ApplicationDbContext>();
-            services.AddControllersWithViews();
 
             services.AddAuthentication()
                 .AddGoogle(options =>
@@ -43,6 +42,10 @@ namespace kTrack
                     options.ClientId = Configuration.GetSection("GClientId").Value;
                     options.ClientSecret = Configuration.GetSection("GClientSecret").Value;
                 });
+
+            services.AddAuthorization();
+
+            services.AddControllersWithViews();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -7,9 +7,11 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using kTrack.Data;
 using kTrack.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace kTrack.Controllers
 {
+    [Authorize]
     public class ProjectsController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -20,12 +22,14 @@ namespace kTrack.Controllers
         }
 
         // GET: Projects
+        [AllowAnonymous]
         public async Task<IActionResult> Index()
         {
             return View(await _context.Project.ToListAsync());
         }
 
         // GET: Projects/Details/5
+        [AllowAnonymous]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
