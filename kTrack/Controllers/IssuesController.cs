@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using kTrack.Data;
 using kTrack.Models;
@@ -15,10 +16,12 @@ namespace kTrack.Controllers
     public class IssuesController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly UserManager<IdentityUser> _userManager;
 
-        public IssuesController(ApplicationDbContext context)
+        public IssuesController(ApplicationDbContext context, UserManager<IdentityUser> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
 
 
@@ -54,7 +57,8 @@ namespace kTrack.Controllers
         // GET: Issues/Create
         public IActionResult Create()
         {
-            ViewData["AuthorId"] = new SelectList(_context.Users, "Id", "Id");
+            //ViewData["AuthorId"] = new SelectList(_context.Users, "Id", "Id");
+            ViewData["AuthorId"] = _userManager.GetUserId(this.User);
             ViewData["ProjectRefId"] = new SelectList(_context.Project, "Id", "Title");
             return View();
         }
@@ -72,7 +76,8 @@ namespace kTrack.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["AuthorId"] = new SelectList(_context.Users, "Id", "Id", issue.AuthorId);
+            //ViewData["AuthorId"] = new SelectList(_context.Users, "Id", "Id", issue.AuthorId);
+            ViewData["AuthorId"] = _userManager.GetUserId(this.User);
             ViewData["ProjectRefId"] = new SelectList(_context.Project, "Id", "Title", issue.ProjectRefId);
             return View(issue);
         }
